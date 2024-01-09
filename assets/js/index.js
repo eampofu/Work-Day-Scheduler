@@ -1,6 +1,6 @@
 var timeDisplayEl = $("#currentDay");
 var scheduleContainer = $(".container");
-var hours = ["9", "10", "11", "12", "1", "2", "3", "4", "5"];
+var hours = ["9", "10", "11", "12", "13", "14", "15", "16", "17"];
 var workHours = [
 	"9AM",
 	"10AM",
@@ -13,7 +13,7 @@ var workHours = [
 	"5PM",
 ];
 var currentHour = parseInt(dayjs().format("HH"));
-console.log(currentHour);
+console.log("current hour "+currentHour);
 // handle displaying the time
 function displayTime() {
 	var rightNow = dayjs().format("DD MMM YYYY [at] hh:mm:ss a");
@@ -27,24 +27,38 @@ function generatePlanner() {
 	for (var i = 0; i < hours.length; i++) {
 		const hour = hours[i];
 		const displayHour = workHours[i];
-		console.log(displayHour);
-		
+	//	console.log(displayHour);
+		var status ='';
+        if(hour==currentHour){
+            status="present";
+        }
+        else if (hour<currentHour){
+            status="past";
+        }
+        else if (hour>currentHour){
+            status="future";
+        }
+        else{
+            status="";
+        }
 		var row = $("<div>");
 		row.addClass("row");
 		var timeBlock = $("<div>");
 		timeBlock.addClass("col-2 time-block hour");
 		timeBlock.text(displayHour);
 		var todoText = $("<textarea>");
-		todoText.addClass("col-8");
+		todoText.addClass("col-8 "+status);
 		var btnSave = $("<button>");
-		btnSave.addClass("col-2 saveBtn data-hour=" + hour);
+        
+        btnSave.append($('<i>').addClass("fas fa-save"))
+		btnSave.addClass("col-2 saveBtn  data-hour=" + hour );
 
 		row.append(timeBlock);
 		row.append(todoText);
 		row.append(btnSave);
 		scheduleContainer.append(row);
 
-		console.log(row);
+		
 	}
 }
 generatePlanner();
