@@ -17,12 +17,12 @@ console.log("current hour " + currentHour);
 
 // handle displaying the time
 function displayTime() {
-	var rightNow = dayjs().format("DD MMM YYYY [at] hh:mm:ss a");
+	var rightNow = dayjs().format("DD MMM YYYY");
 	timeDisplayEl.text(rightNow);
 }
 
 setInterval(displayTime, 1000);
-console.log(hours.length);
+
 // create the html
 function generatePlanner() {
 	for (var i = 0; i < hours.length; i++) {
@@ -71,5 +71,6 @@ $("button").on("click", (event) => {
 	var value = $(event.target).siblings("textarea").val();
     //save to local storage
 	localStorage.setItem(key, value);
+    alert("Record saved !");
 	 
 });
