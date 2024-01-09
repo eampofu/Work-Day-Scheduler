@@ -14,6 +14,7 @@ var workHours = [
 ];
 var currentHour = parseInt(dayjs().format("HH"));
 console.log("current hour " + currentHour);
+
 // handle displaying the time
 function displayTime() {
 	var rightNow = dayjs().format("DD MMM YYYY [at] hh:mm:ss a");
@@ -38,6 +39,9 @@ function generatePlanner() {
 		} else {
 			status = "";
 		}
+//get todo item from localstorage using the hour 
+   var storage=localStorage.getItem(hour)
+         
 		var row = $("<div>");
 		row.addClass("row");
 		var timeBlock = $("<div>");
@@ -45,6 +49,7 @@ function generatePlanner() {
 		timeBlock.text(displayHour);
 		var todoText = $("<textarea>");
 		todoText.addClass("col-8 " + status);
+        todoText.text(storage);
 		var btnSave = $("<button>");
 
 		btnSave.append($("<i>").addClass("fas fa-save"));
@@ -60,8 +65,11 @@ function generatePlanner() {
 generatePlanner();
 //event handler for the button click
 $("button").on("click", (event) => {
+    //get the hour from the button and use it as the key
 	var key = $(event.target).attr("data-hour");
+    //get the text input and use it as the value
 	var value = $(event.target).siblings("textarea").val();
+    //save to local storage
 	localStorage.setItem(key, value);
-	console.log(key);
+	 
 });
